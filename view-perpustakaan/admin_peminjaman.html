@@ -35,56 +35,56 @@
                 <nav class="flex flex-col space-y-2">
                     <a
                         class="flex items-center text-white py-2 px-3 rounded hover:bg-gray-700"
-                        href="#"
+                        href="admin_dashboard.html"
                     >
                         <i class="fas fa-tachometer-alt mr-2"></i>
                         Dashboard
                     </a>
                     <a
                         class="flex items-center text-white py-2 px-3 rounded hover:bg-gray-700"
-                        href="#"
+                        href="admin_buku.html"
                     >
                         <i class="fas fa-book mr-2"></i>
                         Buku
                     </a>
                     <a
                         class="flex items-center text-white py-2 px-3 rounded hover:bg-gray-700"
-                        href="#"
+                        href="admin_kategori.html"
                     >
                         <i class="fas fa-book mr-2"></i>
                         Kategori Buku
                     </a>
                     <a
                         class="flex items-center text-white py-2 px-3 rounded hover:bg-gray-700"
-                        href="#"
+                        href="admin_penulis.html"
                     >
                         <i class="fas fa-pencil mr-2"></i>
                         Penulis
                     </a>
                     <a
                         class="flex items-center text-white py-2 px-3 rounded hover:bg-gray-700"
-                        href="#"
+                        href="admin_penerbit.html"
                     >
                         <i class="fas fa-house mr-2"></i>
                         Penerbit
                     </a>
                     <a
                         class="flex items-center text-white py-2 px-3 rounded hover:bg-gray-700"
-                        href="#"
+                        href="admin_peminjaman.html"
                     >
                         <i class="fas fa-hand mr-2"></i>
                         Peminjaman
                     </a>
                     <a
                         class="flex items-center text-white py-2 px-3 rounded hover:bg-gray-700"
-                        href="#"
+                        href="profile.html"
                     >
                         <i class="fas fa-gear mr-2"></i>
                         Pengaturan
                     </a>
                     <a
                         class="flex items-center text-white py-2 px-3 rounded hover:bg-gray-700"
-                        href="#"
+                        href="login.html"
                     >
                         <i class="fas fa-right-from-bracket mr-2"></i>
                         Logout
@@ -95,6 +95,11 @@
             <div class="flex flex-col w-full h-screen p-5">
                 <main class="flex-1">
                     <h1 class="text-xl font-bold mb-5">Data Peminjaman</h1>
+                    <a href="admin_create_peminjaman.html">
+                        <button
+                        class="bg-blue-500 text-white py-2 px-4 rounded mb-3">
+                        Tambah Peminjaman Buku
+                        </button>
                     <div class="bg-white shadow-md rounded-lg overflow-hidden">
                         <table class="min-w-full bg-white">
                             <thead class="bg-gray-200">
@@ -146,12 +151,16 @@
                                         Dipinjam
                                     </td>
                                     <td class="border px-4 py-2">
-                                        <button
-                                            class="text-blue-500 hover:underline"
-                                            onclick="window.location.href='/update-peminjaman/1'"
-                                        >
-                                            Update Status
-                                        </button>
+                                        <a href="admin_update_peminjaman.html">
+                                            <button
+                                            class="bg-yellow-500 text-white py-1 px-3 rounded">
+                                            Update
+                                            </button>
+                                        </a>
+                                            <button
+                                            class="bg-yellow-500 text-white py-1 px-3 rounded">
+                                            Delete
+                                            </button>
                                     </td>
                                 </tr>
                                 <!-- Repeat rows as needed -->

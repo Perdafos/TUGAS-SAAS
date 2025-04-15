@@ -1,0 +1,15 @@
+body {
+    background-color: rgba(246, 236, 174, 0.438);
+}
+
+.card-img-top {
+    width: 150px;
+    margin: 24px auto;
+    display: flex;
+}
+
+.center {
+    width: 100px;
+    margin: 24px auto;
+    display: block;
+}
