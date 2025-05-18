@@ -14,11 +14,11 @@
                 <div class="penulis p-0 m-0">
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">
-                            Tambah Buku
+                            Tambah Peminjaman
                         </h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active text-white">
-                                Halaman Tambah Data Buku
+                                Halaman Tambah Data Peminjam
                             </li>
                         </ol>
                         @if ($errors->any())
@@ -30,9 +30,16 @@
                                 </ul>
                             </div>
                         @endif
-                        <form action="{{ url('buku') }}" class="row my-4 gap-3" method="post">
+                        <form action="{{ url('peminjaman') }}" class="row my-4 gap-3" method="post">
                             @csrf
                             <div class="row gap-3">
+                                <div class="col-12 col-md-4 form-group">
+                                    <label for="username" class="form-label">
+                                        Username *
+                                    </label>
+                                    <input type="text" name="username" id="username" class="form-control"
+                                        placeholder="Masukkan username" value="{{ Session::get('username') }}">
+                                </div>
                                 <div class="col-12 col-md-4 form-group">
                                     <label for="judul" class="form-label">
                                         Judul Buku *
@@ -41,46 +48,35 @@
                                         placeholder="Masukkan Judul Buku" value="{{ Session::get('judul') }}">
                                 </div>
                                 <div class="col-12 col-md-4 form-group">
-                                    <label for="penulis" class="form-label">
-                                        Penulis *
+                                    <label for="tanggal" class="form-label">
+                                        Tanggal Peminjaman *
                                     </label>
-                                    <input type="text" name="penulis" id="penulis" class="form-control"
-                                        placeholder="Masukkan Penulis Buku" value="{{ Session::get('penulis') }}">
+                                    <input type="date" name="tanggal" id="tanggal" class="form-control"
+                                        placeholder="Masukkan Tanggal" value="{{ Session::get('tanggal') }}">
                                 </div>
                                 <div class="col-12 col-md-4 form-group">
-                                    <label for="penerbit" class="form-label">
-                                        Penerbit *
+                                    <label for="status" class="form-label">
+                                        Status *
                                     </label>
-                                    <input type="text" name="penerbit" id="penerbit" class="form-control"
-                                        placeholder="Masukkan Penerbit Buku" value="{{ Session::get('penerbit') }}">
+                                    <select name="status" id="status" class="form-control">
+                                        <option value="">Pilih Status</option>
+                                        <option value="pinjam" {{ Session::get('status') == 'pinjam' ? 'selected' : '' }}>Pinjam</option>
+                                        <option value="kembali" {{ Session::get('status') == 'kembali' ? 'selected' : '' }}>Kembali</option>
+                                    </select>
                                 </div>
                                 <div class="col-12 col-md-4 form-group">
-                                    <label for="kategori" class="form-label">
-                                        Kategori *
+                                    <label for="denda" class="form-label">
+                                        Denda *
                                     </label>
-                                    <input type="text" name="kategori" id="kategori" class="form-control"
-                                        placeholder="Masukkan Kategori Buku" value="{{ Session::get('kategori') }}">
+                                    <input type="text" name="denda" id="denda" class="form-control"
+                                        placeholder="Masukkan Denda" value="{{ Session::get('denda') }}">
                                 </div>
                                 <div class="col-12 col-md-4 form-group">
-                                    <label for="rak" class="form-label">
-                                        Rak *
+                                    <label for="catatan" class="form-label">
+                                        Catatan *
                                     </label>
-                                    <input type="text" name="rak" id="rak" class="form-control"
-                                        placeholder="Masukkan Rak Buku" value="{{ Session::get('rak') }}">
-                                </div>
-                                <div class="col-12 col-md-4 form-group">
-                                    <label for="isbn" class="form-label">
-                                        ISBN Buku *
-                                    </label>
-                                    <input type="text" name="isbn" id="isbn" class="form-control"
-                                        placeholder="Masukkan ISBN Buku" value="{{ Session::get('isbn') }}">
-                                </div>
-                                <div class="col-12 col-md-4 form-group">
-                                    <label for="tahun" class="form-label">
-                                        Tahun Terbit *
-                                    </label>
-                                    <input type="date" name="tahun" id="tahun" class="form-control"
-                                        placeholder="Masukkan Tahun Terbit" value="{{ Session::get('tahun') }}">
+                                    <input type="text" name="catatan" id="catatan" class="form-control"
+                                        placeholder="Masukkan Catatan" value="{{ Session::get('catatan') }}">
                                 </div>
                             </div>
                             <div class="row my-3">

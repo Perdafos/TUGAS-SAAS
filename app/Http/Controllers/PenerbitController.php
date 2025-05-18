@@ -3,91 +3,83 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Penerbit;
-
+use App\Models\penerbit;
+use Illuminate\Support\Facades\Session;
 class PenerbitController extends Controller
 {
-    public function create(Request $request)
+     public function index()
     {
-        $id = mt_rand(1000000000000000, 9999999999999999);
-        $data = [
-            'penerbit_id' => $id,
-            'penerbit_nama' => $request->input('nama'),
-            'penerbit_alamat' => $request->input('alamat'),
-            'penerbit_notelp' => $request->input('notelp'),
-            'penerbit_email' => $request->input('email'),
+        $data = penerbit::orderBy('nama', 'asc')->paginate(1000);
+        return view('admin.penerbit')->with('data', $data);
+    }
+
+    public function create()
+    {
+        return view('admin.tambah_penerbit');
+    }
+
+    public function store(Request $request)
+    {
+        Session::flash('nama', $request->nama);
+        Session::flash('alamat', $request->alamat);
+        Session::flash('telp', $request->telp);
+        Session::flash('email', $request->email);
+        
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',
+            'telp' => 'required|string|max:255',
+            'email' => 'required|email',
+        ]);[
+            'nama.required' => 'Nama penerbit harus diisi',
+            'alamat.required' => 'Alamat Penerbit harus diisi',
+            'telp.required' => 'Nomor Telepon harus diisi',
+            'email.requred' => 'Email harus diisi',
         ];
-        Penerbit::createPenerbit($data);
-        return redirect()->route('penerbit')->with('success', 'Data penerbit berhasil ditambahkan!');
+        $data = [
+            'nama' => $request->input('nama'),
+            'alamat' => $request->input('alamat'),
+            'telp' => $request->input('telp'),
+            'email' => $request->input('email'),
+        ];
+        penerbit::create($data);
+        return redirect()->to('penerbit')->with('success', 'penerbit berhasil ditambahkan');
     }
 
-    public function tambah_penerbitAdmin(Request $request)
+    public function show($id)
     {
-        $validatedData = $request->validate([
-            'nama' => 'required|string|max:50',
-            'alamat' => 'required|string|max:50',
-            'notelp' => 'required|numeric|digits_between:10,13',
-            'email' => 'required|email|max:50',
-        ]);
 
-        Penerbit::create([
-            'penerbit_id' => uniqid(),
-            'penerbit_nama' => $validatedData['nama'],
-            'penerbit_alamat' => $validatedData['alamat'],
-            'penerbit_notelp' => $validatedData['notelp'],
-            'penerbit_email' => $validatedData['email'],
-        ]);
-
-        return redirect()->route('penerbitAdmin')->with('success', 'Penerbit berhasil ditambahkan!');
     }
 
-    public function penerbit()
+    public function edit($id)
     {
-        $data = Penerbit::readPenerbit();
-        return view('pages.penerbit', ['level' => 'admin'])->with('penerbit', $data);
+        $data = penerbit::where('nama', $id)->first();
+        return view('admin.editpenerbit')->with('data', $data);
     }
 
-    public function index()
+    public function update(Request $request, $id)
     {
-        $penerbit = Penerbit::all(); // Fetch all penerbit records from the database
-        return view('admin.penerbit', compact('penerbit')); // Pass the data to the view
+        $request->validate([
+            'alamat' => 'required|string|max:255',
+            'telp' => 'required|string|max:255',
+            'email' => 'required|email',
+        ]);[
+            'alamat.required' => 'Alamat Penerbit harus diisi',
+            'telp.required' => 'Nomor Telepon harus diisi',
+            'email.requred' => 'Email harus diisi',
+        ];
+        $data = [
+            'alamat' => $request->input('alamat'),
+            'telp' => $request->input('telp'),
+            'email' => $request->input('email'),
+        ];
+        penerbit::where('nama', $id)->update($data);
+        return redirect()->to('penerbit')->with('success', 'penerbit berhasil ditambahkan');
     }
 
-    public function edit($penerbit_id)
+    public function destroy($id)
     {
-        $penerbit = Penerbit::findOrFail($penerbit_id);
-        return view('admin.update_penerbit', compact('penerbit'));
-    }
-
-    public function update(Request $request, $penerbit_id)
-    {
-        $validatedData = $request->validate([
-            'nama' => 'required|string|max:50',
-            'alamat' => 'required|string|max:50',
-            'notelp' => 'required|numeric|digits_between:10,13',
-            'email' => 'required|email|max:50',
-        ]);
-
-        $penerbit = Penerbit::findOrFail($penerbit_id);
-        $penerbit->update([
-            'penerbit_nama' => $validatedData['nama'],
-            'penerbit_alamat' => $validatedData['alamat'],
-            'penerbit_notelp' => $validatedData['notelp'],
-            'penerbit_email' => $validatedData['email'],
-        ]);
-
-        return redirect()->route('penerbitAdmin')->with('updated', 'Penerbit berhasil diperbarui!');
-    }
-
-    public function update_penerbit($id)
-    {
-        $penerbit = Penerbit::readPenerbitById($id);
-        return view('actions.penerbit.update_penerbit', ['level' => 'admin'])->with('penerbit', $penerbit);
-    }
-
-    public function delete($id)
-    {
-        Penerbit::deletePenerbit($id);
-        return redirect()->route('penerbitAdmin')->with('deleted', 'Data penerbit berhasil dihapus!');
+        penerbit::where('nama', $id)->delete();
+        return redirect()->to('penerbit')->with('success', 'berhasil Hapus Data');
     }
 }

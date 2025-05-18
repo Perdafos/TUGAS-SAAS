@@ -2,60 +2,69 @@
 
 @section('title', 'login - web perpustakaan')
 
-  @section('header')
+@section('header')
     @include('template.sidebar_admin')
-  @endsection 
+@endsection
 
 @section('main')
-      <!-- form tambah -->
+    <!-- form tambah -->
     <main>
         <div class="card" style="width: auto; margin: 30px;">
             <div class="card-body">
                 <div class="penulis p-0 m-0">
                     <div class="container-fluid px-4">
-                    <h1 class="mt-4">
-                        Tambah Penulis
-                    </h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active text-white">
-                            Halaman Tambah Data Penulis
-                        </li>
-                    </ol>
-                    <form action="">
-                        <div class="row gap-3">
-                            <div class="col-12 col-md-4 form-group">
-                                <label for="judul_buku" class="form-label">
-                                    Judul Buku *
-                                </label>
-                                <input type="text" name="judul_buku" id="judul_buku" class="form-control" placeholder="Masukkan judul buku">
+                        <h1 class="mt-4">
+                            Tambah Penulis
+                        </h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active text-white">
+                                Halaman Tambah Data Penulis
+                            </li>
+                        </ol>
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
-                            <div class="col-12 col-md-4 form-group">
-                                <label for="penerbit_buku" class="form-label">
-                                    Penulis Buku *
-                                </label>
-                                <input type="text" name="penulis_buku" id="penulis_buku" class="form-control" placeholder="Masukkan penulis buku">
+                        @endif
+                        <form action="{{ url('penulis') }}" class="row my-4 gap-3" method="post">
+                            @csrf
+                            <div class="row gap-3">
+                                <div class="col-12 col-md-4 form-group">
+                                    <label for="judul" class="form-label">
+                                        Judul *
+                                    </label>
+                                    <input type="text" name="judul" id="judul" class="form-control"
+                                        placeholder="Masukkan Judul Buku" value="{{ Session::get('judul') }}">
+                                </div>
+                                <div class="col-12 col-md-4 form-group">
+                                    <label for="penulis" class="form-label">
+                                        Penulis *
+                                    </label>
+                                    <input type="text" name="penulis" id="penulis" class="form-control"
+                                        placeholder="Masukkan Nama Penulis" value="{{ Session::get('penulis') }}">
+                                </div>
+                                <div class="col-12 col-md-4 form-group">
+                                    <label for="isbn" class="form-label">
+                                        ISBN *
+                                    </label>
+                                    <input type="interger" name="isbn" id="isbn" class="form-control"
+                                        placeholder="Masukkan Nomor ISBN" value="{{ Session::get('isbn') }}">
+                                </div>
+                            <div class="row my-3">
+                                <div class="col-12 col-md-4">
+                                    <button class="btn btn-warning">
+                                        Tambah
+                                    </button>
+                                </div>
                             </div>
-                            <div class="col-12 col-md-4 form-group">
-                                <label for="isbn" class="form-label">
-                                    Nomor ISBN *
-                                </label> 
-                                <input type="text" name="isbn" id="isbn" class="form-control" placeholder="Masukkan nomor ISBN">
-                            </div>
-                        </div>
-                        <div class="row my-3">
-                            <div class="col-12 col-md-4">
-                                <button class="btn btn-warning">
-                                    Tambah
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-      
-
-
 @endsection

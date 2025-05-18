@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class penerbit extends Model
+class penulis extends Model
 {
     use HasFactory;
-    protected $table = 'penerbit';
+    protected $table = 'penulis';
      protected $fillable = [
-        'nama',
-        'alamat',
-        'telp',
-        'email'
+        'judul',
+        'penulis',
+        'isbn'
     ];
     public $timestamps = false;
 }

@@ -21,38 +21,46 @@
                                 Halaman Tambah Data Penerbit
                             </li>
                         </ol>
-                        <form action="{{ route('tambahpenerbit') }}" class="row my-4 gap-3" method="post">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <form action="{{ url('penerbit') }}" class="row my-4 gap-3" method="post">
                             @csrf
                             <div class="row gap-3">
                                 <div class="col-12 col-md-4 form-group">
                                     <label for="nama" class="form-label">
-                                        Nama *
+                                        Nama Penerbit *
                                     </label>
                                     <input type="text" name="nama" id="nama" class="form-control"
-                                        placeholder="Masukkan nama penerbit">
+                                        placeholder="Masukkan Nama" value="{{ Session::get('nama') }}">
                                 </div>
                                 <div class="col-12 col-md-4 form-group">
                                     <label for="alamat" class="form-label">
-                                        Alamat *
+                                        Alamat Penerbit *
                                     </label>
                                     <input type="text" name="alamat" id="alamat" class="form-control"
-                                        placeholder="Masukkan Alamat penerbit ">
+                                        placeholder="Masukkan Alamat" value="{{ Session::get('alamat') }}">
                                 </div>
                                 <div class="col-12 col-md-4 form-group">
-                                    <label for="notelp" class="form-label">
-                                        Nomor telepon *
+                                    <label for="telp" class="form-label">
+                                        No Telp Penerbit *
                                     </label>
-                                    <input type="number" name="notelp" id="notelp" class="form-control"
-                                        placeholder="Masukkan nomor telpon">
+                                    <input type="interger" name="telp" id="telp" class="form-control"
+                                        placeholder="Masukkan Nomor Telepon" value="{{ Session::get('telp') }}">
                                 </div>
                                 <div class="col-12 col-md-4 form-group">
-                                    <label for="notelp" class="form-label">
-                                        Alamat Email *
+                                    <label for="email" class="form-label">
+                                        Email *
                                     </label>
                                     <input type="email" name="email" id="email" class="form-control"
-                                        placeholder="Masukkan Alamat Email">
+                                        placeholder="Masukkan Email" value="{{ Session::get('email') }}">
                                 </div>
-                            </div>
                             <div class="row my-3">
                                 <div class="col-12 col-md-4">
                                     <button class="btn btn-warning">
@@ -67,10 +75,3 @@
         </div>
     </main>
 @endsection
-
-@if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Berhasil!</strong> {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif

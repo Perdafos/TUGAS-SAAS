@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('peminjaman_detail', function (Blueprint $table) {
-            $table->string('peminjaman_detail_buku_id', 16);
-
-            $table->foreign('peminjaman_detail_buku_id')->references('buku_id')->on('buku')
-                ->onDelete('cascade')->onUpdate('cascade');
+        Schema::create('kategori', function (Blueprint $table) {
+            $table->string('judul');
+            $table->enum('kategori', ['Fiksi', 'Non-Fiksi', 'Komik', 'Majalah']);
+            $table->integer('isbn');
+            $table->unique('isbn');
+            $table->timestamps();
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('peminjaman_detail');
+        Schema::dropIfExists('kategori');
     }
 };

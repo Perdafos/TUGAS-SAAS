@@ -7,79 +7,92 @@
 @endsection
 
 @section('main')
-    <!-- tabel penerbit -->
     <main>
         <div class="card" style="width: auto; margin: 30px;">
             <div class="card-body">
-                <div class="penerbit p-0 m-0">
+                <div class="Kategori p-0 m-0">
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">
-                            Penerbit
+                            Kategori
                         </h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active" style="color: white;">
-                                Halaman Data Penerbit
+                            <li class="breadcrumb-item active" style="color: #ECDFCC;">
+                                Halaman Data Kategori
                             </li>
                         </ol>
-                        @if (session('success'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <strong>Berhasil!</strong> {{ session('success') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
-                        @elseif (session('updated'))
-                            <div class="alert alert-info alert-dismissible fade show" role="alert">
-                                <strong>Berhasil!</strong> {{ session('updated') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
-                        @elseif (session('deleted'))
-                            <div class="alert alert-info alert-dismissible fade show" role="alert">
-                                <strong>Berhasil!</strong> {{ session('deleted') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
-                        @endif
-                        <a href="/tambahpenerbit">
+                        <a href="/penerbit/create">
                             <button class="btn btn-primary mb-3">
-                                Tambah Data
+                                Tambah Kategori
                             </button>
                         </a>
+
+                        @if (Session::has('success'))
+                            <div class="alert alert-success">
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
+
                         <table class="table table-dark table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="row">No</th>
-                                    <th scope="row">Nama Penerbit</th>
-                                    <th scope="row">Alamat Penerbit</th>
-                                    <th scope="row">No Telp Penerbit</th>
-                                    <th scope="row">Email Penerbit</th>
-                                    <th scope="row">Aksi</th>
+                                    <th >No</th>
+                                    <th >Nama Penerbit</th>
+                                    <th >Alamat Penerbit</th>
+                                    <th >No Telp Penerbit</th>
+                                    <th >Email Penerbit</th>
+                                    <th >Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($penerbit as $penerbit)
-                                    <tr >
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $penerbit->penerbit_nama }}</td>
-                                        <td>{{ $penerbit->penerbit_alamat }}</td>
-                                        <td>{{ $penerbit->penerbit_notelp }}</td>
-                                        <td>{{ $penerbit->penerbit_email }}</td>
+                                <?php $i = $data->firstItem(); ?>
+                                @foreach ($data as $item)
+                                    <tr>
+                                        <td>{{ $i }}</td>
+                                        <td>{{ $item->nama }}</td>
+                                        <td>{{ $item->alamat }}</td>
+                                        <td>{{ $item->telp }}</td>
+                                        <td>{{ $item->email }}</td>
                                         <td>
-                                            <div class="d-flex gap-2">
-                                                <a
-                                                    href="{{ route('update_penerbit', ['penerbit_id' => $penerbit->penerbit_id]) }}">
-                                                    <button class="btn btn-warning"><i class="fas fa-pencil"></i></button>
-                                                </a>
-                                                <form
-                                                    action="{{ route('penerbit.delete', ['penerbit_id' => $penerbit->penerbit_id]) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                                </form>
+                                            <a href="{{ url('penerbit/' . $item->nama . '/edit') }}"
+                                                class="btn btn-warning">Edit</a>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#deleteModal{{ $item->nama }}">
+                                                Delete
+                                            </button>
+
+                                            <div class="modal fade" id="deleteModal{{ $item->nama }}" tabindex="-1"
+                                                aria-labelledby="deleteModalLabel{{ $item->nama }}" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title"
+                                                                id="deleteModalLabel{{ $item->nama }}">Konfirmasi
+                                                                Hapus</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Apakah Anda yakin ingin menghapus data Penerbit
+                                                            <strong>{{ $item->judul }}</strong>?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Batal</button>
+                                                            <form class="d-inline"
+                                                                action="{{ url('penerbit/' . $item->nama) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" name="submit"
+                                                                    class="btn btn-danger">Hapus</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
+                                    <?php $i++; ?>
                                 @endforeach
                             </tbody>
                         </table>

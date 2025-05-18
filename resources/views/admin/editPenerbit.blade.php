@@ -1,7 +1,5 @@
 @extends('template.layout-admin')
 
-@section('title', 'login - web perpustakaan')
-
 @section('header')
     @include('template.sidebar_admin')
 @endsection
@@ -14,11 +12,11 @@
                 <div class="penulis p-0 m-0">
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">
-                            Tambah Kategori
+                            Edit Penerbit
                         </h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active text-white">
-                                Halaman Tambah Data Kategori
+                                Halaman Edit Data Penerbit
                             </li>
                         </ol>
                         @if ($errors->any())
@@ -30,40 +28,41 @@
                                 </ul>
                             </div>
                         @endif
-                        <form action="{{ url('kategori') }}" class="row my-4 gap-3" method="post">
+                        <form action="{{ url('penerbit/'.$data->nama) }}" class="row my-4 gap-3" method="post">
                             @csrf
-                            <div class="row gap-3">
-                                <div class="col-12 col-md-4 form-group">
-                                    <label for="judul" class="form-label">
-                                        Judul Buku *
+                            @method('PUT')
+                            <div class="col-12 col-md-4 form-group">
+                                    <label for="nama" class="form-label">
+                                        Nama Penerbit *
                                     </label>
-                                    <input type="text" name="judul" id="judul" class="form-control"
-                                        placeholder="Masukkan Judul Buku" value="{{ Session::get('judul') }}">
+                                    <input type="text" name="nama" id="nama" class="form-control"
+                                        placeholder="Masukkan Nama" value="{{ $data->nama }}" readonly>
                                 </div>
                                 <div class="col-12 col-md-4 form-group">
-                                    <label for="kategori" class="form-label">
-                                        Kategori *
+                                    <label for="alamat" class="form-label">
+                                        Alamat Penerbit *
                                     </label>
-                                    <select name="kategori" id="kategori" class="form-control">
-                                        <option value="">-- Pilih Kategori --</option>
-                                        <option value="Fiksi" {{ Session::get('kategori') == 'Fiksi' ? 'selected' : '' }}>Fiksi</option>
-                                        <option value="Non-Fiksi" {{ Session::get('kategori') == 'Non-Fiksi' ? 'selected' : '' }}>Non-Fiksi</option>
-                                        <option value="Komik" {{ Session::get('kategori') == 'Komik' ? 'selected' : '' }}>Komik</option>
-                                        <option value="majalah" {{ Session::get('kategori') == 'Majalah' ? 'selected' : '' }}>Majalah</option>
-                                    </select>
+                                    <input type="text" name="alamat" id="alamat" class="form-control"
+                                        placeholder="Masukkan Alamat" value="{{ $data->almat }}">
                                 </div>
                                 <div class="col-12 col-md-4 form-group">
-                                    <label for="isbn" class="form-label">
-                                        ISBN Buku *
+                                    <label for="telp" class="form-label">
+                                        No Telp Penerbit *
                                     </label>
-                                    <input type="text" name="isbn" id="isbn" class="form-control"
-                                        placeholder="Masukkan ISBN Buku" value="{{ Session::get('isbn') }}">
+                                    <input type="interger" name="telp" id="telp" class="form-control"
+                                        placeholder="Masukkan Nomor Telepon" value="{{ $data->telp }}">
                                 </div>
-                            </div>
+                                <div class="col-12 col-md-4 form-group">
+                                    <label for="email" class="form-label">
+                                        Email *
+                                    </label>
+                                    <input type="email" name="email" id="email" class="form-control"
+                                        placeholder="Masukkan Email" value="{{ $data->email }}">
+                                </div>
                             <div class="row my-3">
                                 <div class="col-12 col-md-4">
                                     <button class="btn btn-warning">
-                                        Tambah
+                                        Edit
                                     </button>
                                 </div>
                             </div>
